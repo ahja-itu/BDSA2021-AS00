@@ -2,13 +2,15 @@ name: .NET
 
 on:
   push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
 
+concurrency: 
+  group: concurrency-group-${{ github.head_ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
