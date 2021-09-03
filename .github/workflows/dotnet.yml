@@ -5,20 +5,13 @@ on:
   pull_request:
     branches: [ main ]
 
+concurrency: 
+  group: ${{ github.head_ref }}
+  cancel-in-progress: true
+
 jobs:
-  pre_job:
-    runs-on: ubuntu-latest
-    steps:
-    - id: skip_check
-      uses: fkirc/skip-duplicate-actions@master
-      with:
-        concurrent_skipping: 'never'
-        do_not_skip: '["pull_request", "workflow_dispatch", "schedule"]'
-    outputs: ${{ steps.skip_check.outputs.should_skip }}
-    
   build:
-    needs: pre_job
-    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
+
     runs-on: ubuntu-latest
 
     steps:
