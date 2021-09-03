@@ -6,12 +6,11 @@ on:
     branches: [ main ]
 
 concurrency: 
-  group: ${{ github.head_ref }}
+  group: concurrency-group-${{ github.head_ref }}
   cancel-in-progress: true
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
