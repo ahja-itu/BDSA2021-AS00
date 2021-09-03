@@ -6,9 +6,20 @@ namespace ConsoleApp
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-        }
+            Console.Write("Input year to check it it was a leap year: ");
+            var input = Console.ReadLine();
+            try
+            {
+                int year = Int32.Parse(input);
+                string answer = (IsLeapYear(year)) ? "yay" : "nay";
+                Console.WriteLine(answer);
 
+            }
+            catch(FormatException)
+            {
+                Console.WriteLine($"Unable to parse input \"{input}\"");
+            }
+        }
 
         public static bool IsLeapYear(int year)
         {
