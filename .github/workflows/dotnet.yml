@@ -2,13 +2,22 @@ name: .NET
 
 on:
   push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
 
 jobs:
-  build:
+  pre_job:
+    runs-on: ubuntu-latest
+    outputs: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+    - id: skip_check
+      uses: fkirc/skip-duplicate-actions@master
+      with:
+        do_not_skip: '["pull_request", "workflow_dispatch", "schedule"]'
 
+  build:
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
 
     steps:
