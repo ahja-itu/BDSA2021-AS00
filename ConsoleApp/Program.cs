@@ -10,20 +10,28 @@ namespace ConsoleApp
             var input = Console.ReadLine();
             try
             {
-                int year = Int32.Parse(input);
+                int year;
+                if (!Int32.TryParse(input, out year))
+                {
+                    Console.WriteLine("invalid input: the input was not a number");
+                }
                 string answer = (IsLeapYear(year)) ? "yay" : "nay";
                 Console.WriteLine(answer);
 
             }
-            catch(FormatException)
+            catch(ArgumentException e)
             {
-                Console.WriteLine($"Unable to parse input \"{input}\"");
+                Console.WriteLine($"The input year was not large enough: #{e.Message}");
             }
         }
 
         public static bool IsLeapYear(int year)
         {
-            if (year % 400 == 0)
+            if (year < 1582)
+            {
+                throw new ArgumentException($"the input year \"#{year}\" should be greater or equal to 1582");
+            }
+            else if (year % 400 == 0)
             {
                 return true;
             } 
