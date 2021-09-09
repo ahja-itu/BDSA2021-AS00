@@ -1,0 +1,21 @@
+@startuml
+!pragma useVerticalIf on
+start
+
+if (year < 1582) then (true)
+    :ArgumentException;
+    stop
+elseif (year % 400 == 0) then (true)
+    :return true;
+    stop
+elseif (year % 100 == 0) then(true)
+    :return false;
+    stop
+elseif (year % 4 == 0) then (true)
+    :return true;
+    stop
+else
+    :return false;
+    stop
+endif
+@enduml
